@@ -2,15 +2,14 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 import Comment from './comment'
-import { Typography, Avatar, Box, Button, TextField, Paper } from '@mui/material'
-import { styled } from '@mui/material/styles';
+import { Typography, Avatar, Box } from '@mui/material'
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import { getUserById } from '../../../../redux/userSlice'
 import { getAllProductReviews } from './../../../../redux/productSlice';
 
 const Detail = ({ content, author, image, productId }) => {
   let listReview = []
-  
+
   const dispatch = useDispatch()
   const { users } = useSelector(state => state.users)
   const { reviews } = useSelector(state => state.products)
@@ -46,7 +45,7 @@ const Detail = ({ content, author, image, productId }) => {
           />
           <Box>
             <Typography variant='h5'>Tạo bởi Admin</Typography>
-            <Link to={`../author/${author}`}>
+            <Link to={`../../blogs/author/${author}`}>
               Xem tất cả bài viết của Admin <ArrowRightAltIcon/>
             </Link>
           </Box>

@@ -28,7 +28,7 @@ const BlogItem = ({ id, image, date, productId, title, content }) => {
             | {moment(date).format('lll')}</Typography>
           <Typography variant='subtitle1'>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <Link to={`${id}`}>
+              <Link to={`../../../blogs/${id}`}>
                 <ChatBubbleIcon sx={{ fontSize: '16px', margin: '0 5px', cursor: 'pointer' }}/>
                 {products && products.numberOfReviews} Bình luận
               </Link>
@@ -37,7 +37,7 @@ const BlogItem = ({ id, image, date, productId, title, content }) => {
         </Box>
         <Typography variant='h5' sx={{ color: '#000', marginTop: '5px', fontWeight: 'bold' }}>{title}</Typography>
         <Typography variant='subtitle1' sx={{ margin: '30px 0'}}>{content}</Typography>
-        <Link to={`${id}`}>
+        <Link to={`../../blogs/${id}`}>
           <Button variant="outlined" sx={{ borderRadius: '0px' }}>Xem thêm</Button>
         </Link>
       </Box>

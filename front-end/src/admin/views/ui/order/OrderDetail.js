@@ -38,11 +38,6 @@ const OrderDetail = () => {
                 <i className="bi bi-card-text me-2"> </i>
                 Chi tiết đơn hàng
               </Col>
-              <Col lg='2'>
-                <Button color='primary'>
-                  <i className="bi bi-arrow-down-circle-fill"></i>Xuất
-                </Button>
-              </Col>
             </Row>
           </CardTitle>
           <CardBody className="">
@@ -61,7 +56,7 @@ const OrderDetail = () => {
                     <Label for="exampleEmail">Ngày Đặt hàng:</Label>
                   </Col>
                   <Col xs="7">
-                    <Label for="exampleEmail">{moment(orders && orders.createdAt).format('DD/MM/YYYY')}</Label>
+                    <Label for="exampleEmail">{moment(orders && orders.createdAt).format('DD/MM/YYYY, h:mm:ss a')}</Label>
                   </Col>
                 </Row>
                 <Row>

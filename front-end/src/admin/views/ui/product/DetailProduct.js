@@ -9,7 +9,6 @@ import './product.scss'
 const DetailProduct = () => {
   const { id } = useParams()
   let Product
-  console.log(id)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -28,8 +27,6 @@ const DetailProduct = () => {
     Product = (products.products)[0]
   }
 
-  console.log(categories)
-  console.log(Product)
   useEffect(() => {
     dispatch(getCategoryById(Product && Product.categoryId))
   }, [Product && Product.categoryId])
@@ -110,6 +107,14 @@ const DetailProduct = () => {
                     {(Product && Product.dimensions) && (Product.dimensions.split(',')[0] + ' x ' + Product.dimensions.split(',')[1] + ' x ' + Product.dimensions.split(',')[2])} cm
                   </Col>
                 </Row>
+                
+                <Row>
+                  <Col lg='3'>Video giới thiệu</Col>
+                  <Col lg='9'>
+                    <a href={(Product && Product.linkVideo)} target='_black'>Xem</a>
+                  </Col>
+                </Row>
+
               </Col>
             </Row>
             <Row>

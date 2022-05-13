@@ -43,13 +43,14 @@ const Search = ({ isAuthenticated }) => {
   const { carts, status } = useSelector(state => state.carts)
   const { wishlists, message } = useSelector(state => state.wishlists)
 
+  console.log('isAuthenticated', isAuthenticated)
   useEffect(() => {
     isAuthenticated && dispatch(getAllCarts())
-  }, [status === 'add cart successfully'])
+  }, [isAuthenticated, status === 'add cart successfully'])
 
   useEffect(() => {
     isAuthenticated && dispatch(getAllWishlist())
-  }, [message === 'add wishlist successfully'])
+  }, [isAuthenticated, message === 'add wishlist successfully'])
 
   return (
     <Box sx={{

@@ -4,6 +4,7 @@ import { getCookie, STORAGEKEY } from '../ultils/storage/index'
 const getUrlPrefix = () => '/'
 
 const instance = axios.create({
+  // baseURL: "https://do-an-tot-nghiep-lvthanh.herokuapp.com/api"
   baseURL: "http://localhost:5000/api"
 });
 

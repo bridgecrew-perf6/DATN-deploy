@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Box, Typography, Paper, Grid } from '@mui/material';
+import { Box, Paper, Typography, Button, Dialog, DialogActions, DialogTitle, Container, Grid } from "@mui/material";
 import AnimatedPage from '../../animation-page/AnimatedPage'
 import { styled } from '@mui/material/styles';
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -28,6 +28,9 @@ export default function Cart() {
   const [message, setMessage] = useState('')
   const [orderItems, setOrderItems] = useState([])
   const [listProductId, setListProductId] = useState([])
+  const [dialogSuccess,setDialogSuccess] = useState(false)
+  const [messageDialog, setMessageDialog] = useState('')
+
   let listProduct = []
   let listProductRating = []
   let subtotal2 = [];
@@ -76,37 +79,37 @@ export default function Cart() {
     dispatch(deleteCart(id))
   }
 
+  const deleteProductAfterBuySuccess = (listProductId) => {
+    listProductId && listProductId.map((item) => {
+      handleDeleteCart(item)
+    }) 
+  }
+
   const isActive = (id) => {
     return (listProductId && listProductId.some(item => item === id))
   }
 
   const handleAddOrder = (product) => {
-    const newProduct = {
-      name: product.name,
-      image: product.image,
-      // thêm giá tiền bằng giá tiền đã trừ đi chiết khấu của sp
-      price: subtotal(product.price, product.discount, product.quantity),
-      quantity: product.quantity,
-      productId: product.productId
-    };
-    // kiểm tra nếu sp đã có trong đơn hàng thì không thêm nữa
-    (isActive(product._id) === true)
-      ? setMessage('Sản phẩm đã có trong đơn hàng')
-      : (
-        setOrderItems((prev) => {
-          setMessage('')
-          return [...prev, newProduct]
-        }),
-        setListProductId((prev) => {
-          setMessage('')
-          return [...prev, product._id]
-        })
-      )
+    if(isActive(product._id) === true){
+      setMessage('Sản phẩm đã có trong đơn hàng')
+    }else{
+      const newProduct = {
+        name: product.name,
+        image: product.image,
+        // thêm giá tiền bằng giá tiền đã trừ đi chiết khấu của sp
+        price: subtotal(product.price, product.discount, product.quantity),
+        quantity: product.quantity,
+        productId: product.productId
+      };
+      setOrderItems((prev) => ([...prev, newProduct]))
+      setListProductId((prev) => ([...prev, product._id]))
+      setMessage('')
+    }
   }
 
   return (
     <AnimatedPage>
-      <Main/>
+      <Main link='cart' title='Cart'/>
       <Container maxWidth='xl'>
         <Container maxWidth='xl'>
           <ListCart
@@ -116,7 +119,15 @@ export default function Cart() {
             isActive={isActive}
             handleAddOrder={handleAddOrder}
           />
-          <TotalCart total={total} orderItems={orderItems} setListProductId={setListProductId}/>
+          <TotalCart 
+           total={total} 
+           orderItems={orderItems} 
+           deleteProductAfterBuySuccess={deleteProductAfterBuySuccess}
+           listProductId={listProductId}
+           setListProductId={setListProductId}
+           setDialogSuccess={setDialogSuccess}
+           setMessageDialog={setMessageDialog}
+          />
           <Box sx={{ margin: '30px 0 50px 0' }}>
             <Typography variant='h5' sx={{ margin: '40px 0' }}>Sản phẩm liên quan</Typography>
             <Grid container spacing={1}>
@@ -151,6 +162,21 @@ export default function Cart() {
               </Swiper>
             </Grid>
           </Box>
+          <div>
+            <Dialog
+              open={dialogSuccess}
+              onClose={() => setDialogSuccess(false)}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">
+                {messageDialog && messageDialog}
+              </DialogTitle>
+              <DialogActions>
+                <Button onClick={() => setDialogSuccess(false)} variant="contained">Xác nhận</Button>
+              </DialogActions>
+            </Dialog>
+          </div>
         </Container>
       </Container>
       <Footer/>

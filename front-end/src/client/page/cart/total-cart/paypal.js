@@ -1,8 +1,10 @@
 import React, { useRef, useEffect } from 'react'
 import { post } from '../../../../api/BaseRequest'
 
-const Paypal = ({ total, info, setCheckout, setListProductId, setStatusCreateOrder }) => {
-  console.log(info)
+const Paypal = ({ total, info, setCheckout, setListProductId, setStatusCreateOrder, setMessageDialog, setDialogSuccess, listProductId, deleteProductAfterBuySuccess }) => {
+  
+  console.log(listProductId)
+
   const USD = 22957
   const paypal = useRef()
   useEffect(() => {
@@ -22,7 +24,7 @@ const Paypal = ({ total, info, setCheckout, setListProductId, setStatusCreateOrd
         });
       },
       onApprove: async (data, actions) => {
-        const order = await actions.order.capture()
+        await actions.order.capture()
         const newOrder = {
           ...info,
           paymentResult: 'Đã thanh toán',
@@ -31,9 +33,11 @@ const Paypal = ({ total, info, setCheckout, setListProductId, setStatusCreateOrd
         }
         await post('orders', newOrder)
         setCheckout(false)
-        setListProductId([])
         setStatusCreateOrder(false)
-        console.log(order)
+        setDialogSuccess(true)
+        deleteProductAfterBuySuccess(listProductId)
+        setMessageDialog('Mua hàng thành công')
+        setListProductId([])
       },
       onError: (err) => {
         console.log(err)

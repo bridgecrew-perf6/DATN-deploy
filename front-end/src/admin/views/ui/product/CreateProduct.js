@@ -32,6 +32,9 @@ const validateForm = (values)  => {
   }else if (!(values.countInStock).match('[0-9]')) {
     errors.countInStock = "Vui lòng nhập số lượng trong kho là số";
   }
+  if (!values.linkVideo) {
+    errors.linkVideo = "Bạn chưa nhập link video giới thiệu sản phẩm";
+  }
   return errors;
 }
 
@@ -295,6 +298,23 @@ const CreateProduct = () => {
                     </Field>
                   </FormGroup>
 
+                  <FormGroup>
+                    <Label for="linkVideo">Video giới thiệu sản phẩm</Label>
+                    <Field name="linkVideo">
+                      {({ input, meta }) => (
+                        <div>
+                          <Input
+                            {...input}
+                            type="text"
+                            placeholder='Video giới thiệu sản phẩm'
+                            invalid={meta.error && meta.touched}
+                          />
+                          {meta.error && meta.touched && <span className='error'>{meta.error}</span>}
+                        </div>
+                      )}
+                    </Field>
+                  </FormGroup>
+                  
                   <div className="button-group">
                     <Button type='submit' className="btn" color="primary">
                       Thêm

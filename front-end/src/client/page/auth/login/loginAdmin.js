@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
@@ -108,7 +108,7 @@ export default function SignIn() {
           variant='h5'
           sx={{ color: '#2b78e4', fontWeight: 'bold' }}
         >
-          Relipa Portal
+          Đăng nhập
         </Typography>
         <Box component='form' onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
           <Controller

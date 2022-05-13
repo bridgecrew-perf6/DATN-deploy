@@ -7,7 +7,7 @@ import FormAddress from './FormAddress';
 import TotalMoney from './TotalMoney';
 import Bill from './Bill';
 
-const TotalCart = ({ total, orderItems, setListProductId }) => {
+const TotalCart = ({ total, orderItems, setListProductId, setDialogSuccess, setMessageDialog, deleteProductAfterBuySuccess, listProductId }) => {
   const [listProvince, setListProvince] = useState([])
   const [payment, setPayment] = useState('0')
   const [checkout, setCheckout] = useState(false)
@@ -15,7 +15,7 @@ const TotalCart = ({ total, orderItems, setListProductId }) => {
     province: '---- Tỉnh / Thành phố ---- ',
     district: '---- Quận / Huyện ----',
     commune: '---- Phường / Xã ----',
-    apartmentNumber: 'Số nhà'
+    apartmentNumber: ''
   })
   const [statusCreateOrder, setStatusCreateOrder] = useState(false)
   const [error, setError] = useState('')
@@ -96,9 +96,23 @@ const TotalCart = ({ total, orderItems, setListProductId }) => {
   }
 
   const handleCreateOrder = async() => {
-    payment === '0' && await post('orders', info)
-    payment === '0' ? setStatusCreateOrder(!statusCreateOrder) : setCheckout(true)
-    setListProductId([])
+    try{
+      payment === '0' && await post('orders', info)
+      deleteProductAfterBuySuccess(listProductId)
+      payment === '0' ? setStatusCreateOrder(!statusCreateOrder) : setCheckout(true)
+      setDialogSuccess(true)
+      setMessageDialog('Mua hàng thành công')
+      setListProductId([])
+      setAddress({
+        province: '---- Tỉnh / Thành phố ---- ',
+        district: '---- Quận / Huyện ----',
+        commune: '---- Phường / Xã ----',
+        apartmentNumber: ''
+      })
+    }catch(errror){
+      setDialogSuccess(true)
+      error?.response?.data && setMessageDialog(error.response.data.message)
+    }
   }
 
   return (
@@ -121,8 +135,11 @@ const TotalCart = ({ total, orderItems, setListProductId }) => {
           total={total}
           info={info}
           setCheckout={setCheckout}
-          setListProductId={setListProductId}
           setStatusCreateOrder={setStatusCreateOrder}
+          setDialogSuccess={setDialogSuccess}
+          setMessageDialog={setMessageDialog}
+          deleteProductAfterBuySuccess={deleteProductAfterBuySuccess}
+          setListProductId={setListProductId}
         />
       : <> <TotalMoney total={total} error={error} shipping={SHIPPING_PRICE}/>
         <FormAddress

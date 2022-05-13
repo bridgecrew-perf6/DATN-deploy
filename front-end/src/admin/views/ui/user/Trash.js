@@ -96,14 +96,14 @@ const TrashUser = () => {
                   <td>{index+1}</td>
                   <td>
                     <img
-                      src={item.image}
+                      src={(item.image !== '') ? (item.image) : '/images/user.png'}
                       className="rounded-circle"
                       alt="image"
                       width="45"
                       height="45"
                     />
                   </td>
-                  <td>{item.first_name}{item.last_name}</td>
+                  <td>{item.first_name} {item.last_name}</td>
                   <td>{(item.isAdmin) === true ? 'Admin' : 'User'}</td>
                   <td>
                     {item.isWork === true ? (

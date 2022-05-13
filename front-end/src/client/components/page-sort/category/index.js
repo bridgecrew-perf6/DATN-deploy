@@ -74,7 +74,7 @@ const SortByCategory = () => {
 
   return (
     <AnimatedPage>
-      <Main/>
+      <Main link={`product-category/category/${id}`} title='List Product By Category'/>
       <Container maxWidth='xl'>
         <Container maxWidth='xl'>
         <Box sx={{ marginTop: '50px' }}>
@@ -153,6 +153,7 @@ const SortByCategory = () => {
                           price={item.price}
                           rating={item.rating}
                           image={item.listImage}
+                          discount={item.discount}
                         />
                       </Item>
                     </Grid>

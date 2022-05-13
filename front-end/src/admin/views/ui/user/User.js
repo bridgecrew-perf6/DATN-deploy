@@ -10,12 +10,12 @@ import {
   Col,
   Button,
   Modal,
-  ModalHeader,
   ModalBody,
   ModalFooter, Input } from "reactstrap";
 import { searchUsers } from "../../../../redux/userSlice";
 import Paginate from "../paginate/Paginate";
 import { del } from "../../../../api/BaseRequest";
+
 const User = () => {
   const [error, setError] = useState('')
   const [open, setOpen] = useState(false)
@@ -117,14 +117,14 @@ const User = () => {
                   <td>{index+1}</td>
                   <td>
                     <img
-                      src={item.image}
+                      src={(item.image !== '') ? (item.image) : '/images/user.png'}
                       className="rounded-circle"
                       alt="image"
                       width="45"
                       height="45"
                     />
                   </td>
-                  <td>{item.first_name}{item.last_name}</td>
+                  <td>{item.first_name} {item.last_name}</td>
                   <td>{(item.isAdmin) === true ? 'Admin' : 'User'}</td>
                   <td>
                     {item.isWork === true ? (

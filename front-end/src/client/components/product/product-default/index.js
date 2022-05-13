@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import '../assets/product.scss'
 import { Box, Paper, Avatar, Typography, Rating, Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -75,7 +75,7 @@ const ProductDefault = ({ isAuthenticated, id, name, price, discount, rating , i
               variant='subtitle1'
               color='red'
             >
-              {(parseInt(price) - Math.floor((parseInt(discount)*(parseInt(price))) / 100)).toString()} đ
+              {price - Math.floor((discount*price) / 100)} đ
             </Typography>
           </Box>
           <Box className="product-evaluate">

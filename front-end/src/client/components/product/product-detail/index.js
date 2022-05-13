@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Container, Typography, Button, Paper, Grid, Rating, Dialog, DialogActions, DialogTitle } from "@mui/material";
+import { Box, Container, Typography, Button, Paper, Grid, Rating, Dialog, DialogActions, DialogTitle, Link as Links } from "@mui/material";
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { styled } from '@mui/material/styles';
@@ -121,7 +121,7 @@ const ProductDetail = () => {
 
   return (
     <AnimatedPage>
-      <Main/>
+      <Main link={`product/${id}`} title='Product Detail'/>
       <Container maxWidth='xl'>
         <Container maxWidth='xl'>
           <Grid container spacing={2}>
@@ -181,6 +181,9 @@ const ProductDetail = () => {
                   <Typography variant='subtitle1'>SKU: {Product && Product._id}</Typography>
                   <Typography sx={{ margin: '10px 0' }}>
                     Categories: <Link to={`../../product-category/category/${categories._id}`}>{categories.name}</Link>
+                  </Typography>
+                  <Typography sx={{ margin: '10px 0' }}>
+                    Video giới thiệu sản phẩm: <Links href={Product && Product.linkVideo} target='_blank'>Xem</Links>
                   </Typography>
                 </Box>
               </Item>
